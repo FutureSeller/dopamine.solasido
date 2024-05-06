@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { QueryProvider } from "@/components/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +18,15 @@ export default function RootLayout(props: {
   modal: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
-      <body className={inter.className}>
-        {props.children}
-        {props.modal}
-        <div id="modal-root" />
-      </body>
-      <GoogleAnalytics gaId="G-WF4EN5RSE1" />
-    </html>
+    <QueryProvider>
+      <html lang="ko">
+        <body className={inter.className}>
+          {props.children}
+          {props.modal}
+          <div id="modal-root" />
+        </body>
+        <GoogleAnalytics gaId="G-WF4EN5RSE1" />
+      </html>
+    </QueryProvider>
   );
 }

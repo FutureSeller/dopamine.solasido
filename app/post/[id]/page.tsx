@@ -1,29 +1,22 @@
+import { Metadata, ResolvingMetadata } from "next";
 import { createClient } from "@/utils/supabase/server";
 import { PostSwiper } from "@/components/Swiper/PostSwiper";
-import { Profile } from "@/components/Profile";
 import { PostDescription } from "@/components/PostDescription";
-import { Metadata, ResolvingMetadata } from "next";
+import { Profile } from "@/components/Profile";
+import { getPostById } from "@/queries/get-post-by-id";
+import { getProfile } from "@/queries/get-profile";
 
 type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-async function getPost(id: string) {
-  const supabase = createClient();
-  const { data: post } = await supabase
-    .from("POST")
-    .select()
-    .eq("id", id)
-    .single();
-  return post;
-}
-
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const post = await getPost(params.id);
+  const supabase = createClient();
+  const post = await getPostById({ client: supabase, id: params.id });
 
   return {
     title: post?.title ? `${post.title} | 그냥, 여우!` : (await parent).title,
@@ -47,8 +40,8 @@ export async function generateMetadata(
 
 export default async function PostPage({ params: { id } }: Props) {
   const supabase = createClient();
-  const { data: profile } = await supabase.from("PROFILE").select().single();
-  const post = await getPost(id);
+  const profile = await getProfile({ client: supabase });
+  const post = await getPostById({ client: supabase, id });
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between py-8 bg-black text-white">
