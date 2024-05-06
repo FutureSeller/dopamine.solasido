@@ -17,7 +17,7 @@ export default async function PostModal({
 
   return (
     <Modal>
-      <PostSwiper images={post?.images ?? []} />
+      <PostSwiper post={post} />
       <PostDescription post={post} />
     </Modal>
   );

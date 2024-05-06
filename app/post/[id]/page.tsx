@@ -21,7 +21,7 @@ export default async function PostPage({
       <div className="w-full max-w-2xl min-w-[320px] px-8">
         <Profile profile={profile} />
         <div className="py-2 w-full">
-          <PostSwiper images={post?.images ?? []} />
+          <PostSwiper post={post} />
           <PostDescription post={post} />
         </div>
       </div>
