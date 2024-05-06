@@ -13,6 +13,8 @@ import { getProfile } from "@/queries/get-profile";
 import { Profile } from "@/components/Profile";
 import { PostGridWithPagination } from "@/components/PostGridWithPagination";
 
+export const dynamic = "force-static";
+
 export default async function Home() {
   const supabase = createClient();
   const queryClient = new QueryClient();

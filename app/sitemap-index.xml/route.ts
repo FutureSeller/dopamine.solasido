@@ -1,5 +1,7 @@
 import { createClient } from "../../utils/supabase/server";
 
+export const dynamic = "force-static";
+
 const generateSitemapLink = (url: string) =>
   `<sitemap><loc>${url}</loc></sitemap>`;
 

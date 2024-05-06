@@ -11,6 +11,8 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
