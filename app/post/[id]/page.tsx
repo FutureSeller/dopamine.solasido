@@ -9,7 +9,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function getPost(id: string) {
+async function getPost(id: string) {
   const supabase = createClient();
   const { data: post } = await supabase
     .from("POST")
@@ -30,7 +30,17 @@ export async function generateMetadata(
     description: post?.description || (await parent).description,
     keywords: (await parent).keywords,
     openGraph: {
-      images: post?.images ?? [],
+      url: `https://dopamine.solasido.design/post/${params.id}`,
+      title: `${post?.title || ""} | 그냥, 여우!`,
+      description: post?.description || "우당탕탕 여우의 신혼 일상툰",
+      images: post?.thumbnail,
+      type: "article",
+    },
+    twitter: {
+      title: `${post?.title || ""} | 그냥, 여우!`,
+      description: post?.description || "우당탕탕 여우의 신혼 일상툰",
+      images: post?.thumbnail,
+      card: "summary_large_image",
     },
   };
 }
