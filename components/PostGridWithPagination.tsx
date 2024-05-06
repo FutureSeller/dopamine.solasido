@@ -5,19 +5,19 @@ import useSupabaseBrowser from "@/utils/supabase/client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   GetPostReturnType,
-  getPosts,
   POST_PAGE_SIZE,
+  getPosts,
 } from "@/queries/get-posts";
 import { Spinner } from "./Spinner";
 
-export const PostGridWithPagination = () => {
+export const PostGridWithPagination = (props: { id: number }) => {
   const supabase = useSupabaseBrowser();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery({
       queryKey: ["posts"],
       queryFn: async ({ pageParam }) =>
-        getPosts({ client: supabase, page: pageParam }),
-      initialPageParam: 0,
+        getPosts({ client: supabase, id: pageParam }),
+      initialPageParam: props?.id,
       getNextPageParam: (lastPage: GetPostReturnType) => {
         if (
           !lastPage.posts?.length ||
@@ -26,7 +26,7 @@ export const PostGridWithPagination = () => {
           return null;
         }
 
-        return lastPage.page + 1;
+        return lastPage.posts[lastPage.posts.length - 1].id ?? null;
       },
     });
 

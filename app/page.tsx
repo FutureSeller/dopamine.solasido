@@ -20,18 +20,30 @@ export default async function Home() {
   const queryClient = new QueryClient();
   const profile = await getProfile({ client: supabase });
 
+  const { data: topPost } = await supabase
+    .from("POST")
+    .select("id")
+    .order("id", { ascending: false })
+    .limit(1)
+    .single()
+    .throwOnError();
+
+  if (topPost?.id == null) {
+    return null;
+  }
+
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["posts"],
     queryFn: async ({ pageParam }) => {
-      return await getPosts({ client: supabase, page: pageParam });
+      return await getPosts({ client: supabase, id: pageParam });
     },
-    initialPageParam: 0,
+    initialPageParam: topPost?.id + 1,
     getNextPageParam: (lastPage: GetPostReturnType) => {
       if (!lastPage.posts?.length || lastPage.posts?.length < POST_PAGE_SIZE) {
         return null;
       }
 
-      return lastPage.page + 1;
+      return lastPage.posts[lastPage.posts.length - 1].id ?? null;
     },
   });
 
@@ -40,7 +52,7 @@ export default async function Home() {
       <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
         <div className="max-w-4xl min-w-[320px] px-4 sm:px-8">
           <Profile profile={profile} />
-          <PostGridWithPagination />
+          <PostGridWithPagination id={topPost.id} />
         </div>
       </main>
     </HydrationBoundary>
