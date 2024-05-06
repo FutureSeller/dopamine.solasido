@@ -11,8 +11,8 @@ export default async function Home() {
     .order("post_at", { ascending: false });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between py-8 bg-black text-white">
-      <div className="max-w-4xl min-w-[320px] px-8">
+    <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
+      <div className="max-w-4xl min-w-[320px] px-4 sm:px-8">
         <Profile profile={profile} />
         <PostGrid posts={posts} />
       </div>
