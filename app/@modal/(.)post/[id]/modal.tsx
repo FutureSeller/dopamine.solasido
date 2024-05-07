@@ -38,12 +38,12 @@ export function Modal({ children }: { children: React.ReactNode }) {
   return createPortal(
     <div
       tabIndex={-1}
-      className="overflow-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-screen h-screen bg-gray-100 bg-opacity-50 text-white"
+      className="overflow-y-scroll fixed left-0 top-0 z-50 flex justify-center items-center w-screen h-screen bg-gray-100 bg-opacity-50 text-white"
       data-dissmiss-action={MODAL_DISMISS_ACTION}
       onClick={onDismiss}
       aria-hidden
     >
-      <div className="relative p-4 w-full max-w-2xl">
+      <div className="relative p-4 w-full max-w-2xl max-h-screen">
         <div className="relative rounded-lg shadow bg-black">
           <div className="flex items-center justify-between p-2 border-b rounded dark:border-gray-600">
             <button
