@@ -7,7 +7,7 @@ export const PostDescription = ({
 }) => {
   return (
     <div className="p-4 text-white">
-      <h3 className="text-xl font-semibold">{post?.title}</h3>
+      <h2 className="text-xl font-semibold">{post?.title}</h2>
       <p className="pt-2">{post?.description}</p>
     </div>
   );
