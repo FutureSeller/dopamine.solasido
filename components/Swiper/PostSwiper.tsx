@@ -17,7 +17,7 @@ export const PostSwiper = ({
       <SwiperPrevButton />
       {post?.images.map((image) => (
         <SwiperSlide key={image}>
-          <img src={image} />
+          <img src={image} alt="" />
         </SwiperSlide>
       ))}
       <SwiperSlide key="link-slider">

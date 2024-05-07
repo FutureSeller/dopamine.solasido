@@ -13,7 +13,7 @@ export const PostGrid = ({
       {posts.map((post) => (
         <li
           key={post.id}
-          className="relative hover:brightness-75 aspect-square transition-all duration-300"
+          className="relative hover:brightness-75 aspect-square transition-all duration-300 w-full h-auto"
         >
           <Link
             href={`/post/${post.id}`}

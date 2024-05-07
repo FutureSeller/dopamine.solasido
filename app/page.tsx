@@ -50,7 +50,7 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
-        <div className="max-w-4xl min-w-[320px] px-4 sm:px-8">
+        <div className="w-full max-w-4xl min-w-[320px] px-4 sm:px-8">
           <Profile profile={profile} />
           <PostGridWithPagination id={topPost.id} />
         </div>

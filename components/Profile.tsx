@@ -9,10 +9,15 @@ export const Profile = ({
   return (
     <div className="flex items-center border-b py-4">
       <Link
-        className="w-[80px] sm:w-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300"
+        className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300"
         href={"/"}
       >
-        <img className="object-cover" src={profile?.profile} />
+        <img
+          className="object-cover absolute z-10 top-0 left-0 apsect-squre"
+          src={profile?.profile}
+          alt=""
+        />
+        <div className="absolute top-0 left-0 w-full h-full bg-gray-300" />
       </Link>
       <div>
         <h1 className="text-base font-semibold text-2xl">
