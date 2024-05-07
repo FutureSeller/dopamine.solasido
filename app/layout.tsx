@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "그냥, 여우",
   description: "우당탕탕 여우의 신혼 일상툰",
   keywords: ["여우", "그냥", "신혼 일상", "인스타툰", "일상툰"],
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout(props: {
