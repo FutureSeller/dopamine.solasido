@@ -21,16 +21,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout(props: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}) {
+export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <QueryProvider>
       <html lang="ko">
         <body className={inter.className}>
           {props.children}
-          {props.modal}
           <div id="modal-root" />
         </body>
         <GoogleAnalytics gaId="G-WF4EN5RSE1" />
