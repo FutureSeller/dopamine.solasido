@@ -47,11 +47,7 @@ export const PostGridWithPagination = (props: { id: number }) => {
                 scroll={false}
                 passHref
               >
-                <LazyImage
-                  src={post.thumbnail}
-                  alt={post.title}
-                  effect="blur"
-                />
+                <LazyImage src={post.thumbnail} alt={post.title} />
               </Link>
             </li>
           ));
