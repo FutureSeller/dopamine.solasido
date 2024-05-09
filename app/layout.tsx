@@ -23,7 +23,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <QueryProvider>
       <html lang="ko">
         <body className={[inter.className, "pb-safe"].join(" ")}>
-          {props.children}
+          <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
+            {props.children}
+          </main>
           <div id="modal-root" />
         </body>
         <GoogleAnalytics gaId="G-WF4EN5RSE1" />

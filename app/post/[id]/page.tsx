@@ -46,14 +46,12 @@ export default async function PostPage({ params: { id } }: Props) {
   const post = await getPostById({ client: supabase, id });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between py-8 bg-black text-white">
-      <div className="w-full max-w-2xl min-w-[320px] px-8">
-        <Profile profile={profile} />
-        <div className="py-2 w-full">
-          <PostSwiper post={post} />
-          <PostDescription post={post} />
-        </div>
+    <div className="w-full max-w-2xl min-w-[320px] px-8">
+      <Profile profile={profile} />
+      <div className="py-2 w-full">
+        <PostSwiper post={post} />
+        <PostDescription post={post} />
       </div>
-    </main>
+    </div>
   );
 }
