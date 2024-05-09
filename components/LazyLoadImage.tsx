@@ -11,5 +11,6 @@ export const LazyImage = (props: LazyLoadImageProps) => (
     className={props.className}
     src={props.src}
     alt={props.alt}
+    visibleByDefault
   />
 );
