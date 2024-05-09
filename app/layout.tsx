@@ -22,7 +22,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <QueryProvider>
       <html lang="ko">
-        <body className={inter.className}>
+        <body className={[inter.className, "pb-safe"].join(" ")}>
           {props.children}
           <div id="modal-root" />
         </body>
