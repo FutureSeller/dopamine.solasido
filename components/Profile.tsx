@@ -1,5 +1,8 @@
+"use client";
+
 import { Database } from "@/types/supabase";
 import Link from "next/link";
+import { LazyImage } from "./LazyLoadImage";
 
 export const Profile = ({
   profile,
@@ -9,15 +12,17 @@ export const Profile = ({
   return (
     <div className="flex items-center border-b py-4">
       <Link
-        className="relative w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300"
+        className="block w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300 bg-gray-600"
         href={"/"}
       >
-        <img
-          className="object-cover absolute z-10 top-0 left-0 apsect-squre"
-          src={profile?.profile}
-          alt=""
-        />
-        <div className="absolute top-0 left-0 w-full h-full bg-gray-300" />
+        {profile?.profile && (
+          <LazyImage
+            wrapperClassName="relative z-10 w-full h-full"
+            className="absolute object-cover z-10 top-0 left-0 w-full h-full apsect-squre"
+            src={profile.profile}
+            alt=""
+          />
+        )}
       </Link>
       <div>
         <h1 className="text-base font-semibold text-2xl">

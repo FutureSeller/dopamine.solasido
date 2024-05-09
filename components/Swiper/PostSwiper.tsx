@@ -6,6 +6,7 @@ import Link from "next/link";
 import SwiperPrevButton from "./SwiperPrevButton";
 import SwiperNextButton from "./SwiperNextButton";
 import { Database } from "@/types/supabase";
+import { LazyImage } from "../LazyLoadImage";
 
 export const PostSwiper = ({
   post,
@@ -17,7 +18,12 @@ export const PostSwiper = ({
       <SwiperPrevButton />
       {post?.images.map((image) => (
         <SwiperSlide key={image}>
-          <img src={image} alt="" />
+          <LazyImage
+            wrapperClassName="block w-full h-full relative pt-[100%] bg-gray-600"
+            className="absolute z-10 top-0 left-0 z-10 w-full h-full object-cover apsect-squre"
+            src={image}
+            alt=""
+          />
         </SwiperSlide>
       ))}
       <SwiperSlide key="link-slider">

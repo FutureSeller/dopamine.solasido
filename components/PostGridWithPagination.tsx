@@ -9,6 +9,7 @@ import {
   getPosts,
 } from "@/queries/get-posts";
 import { Spinner } from "./Spinner";
+import { LazyImage } from "./LazyLoadImage";
 
 export const PostGridWithPagination = (props: { id: number }) => {
   const supabase = useSupabaseBrowser();
@@ -38,15 +39,19 @@ export const PostGridWithPagination = (props: { id: number }) => {
           return page.posts?.map((post) => (
             <li
               key={post.id}
-              className="relative hover:brightness-75 aspect-square transition-all duration-300"
+              className="relative hover:brightness-75 aspect-square transition-all duration-300 bg-gray-600"
             >
               <Link
                 href={`/post/${post.id}`}
-                className="block focus:outline-none focus:ring-1 focus:ring-amber-300"
+                className="absolute block focus:outline-none focus:ring-1 focus:ring-amber-300 z-10"
                 scroll={false}
                 passHref
               >
-                <img src={post.thumbnail} alt={post.title} />
+                <LazyImage
+                  src={post.thumbnail}
+                  alt={post.title}
+                  effect="blur"
+                />
               </Link>
             </li>
           ));
