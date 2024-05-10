@@ -46,7 +46,7 @@ export default async function PostPage({ params: { id } }: Props) {
   const post = await getPostById({ client: supabase, id });
 
   return (
-    <div className="w-full max-w-4xl min-w-[320px] px-4 sm:px-8">
+    <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
       <Profile profile={profile} />
       <div className="py-2 w-full">
         <PostSwiper post={post} />

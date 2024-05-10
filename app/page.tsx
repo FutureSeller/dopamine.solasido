@@ -49,7 +49,7 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="w-full max-w-4xl min-w-[320px] px-4 sm:px-8">
+      <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
         <Profile profile={profile} />
         <PostGridWithPagination id={topPost.id} />
       </div>
