@@ -2,6 +2,8 @@ import { createClient } from "../../utils/supabase/server";
 
 export const dynamic = "force-static";
 
+const MAX_URL_COUNT = 50000;
+
 const generateSitemapLink = (url: string) =>
   `<sitemap><loc>${url}</loc></sitemap>`;
 
@@ -9,7 +11,7 @@ export async function GET() {
   const supabase = createClient();
   const { count } = await supabase.from("POST").select("id");
   const postXmls = count
-    ? Array.from({ length: Math.ceil(count / 50000) }, (_, i) => ({
+    ? Array.from({ length: Math.ceil(count / MAX_URL_COUNT) }, (_, i) => ({
         id: i,
       }))
     : [{ id: 0 }];
@@ -17,7 +19,6 @@ export async function GET() {
   const sitemapIndexXML = `<?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${generateSitemapLink("https://dopamine.solasido.design/sitemap.xml")}
-
       ${postXmls
         .map((xmlId) =>
           generateSitemapLink(
@@ -25,7 +26,8 @@ export async function GET() {
           )
         )
         .join("")} 
-    </sitemapindex>`;
+    </sitemapindex>
+  `;
 
   return new Response(sitemapIndexXML, {
     headers: { "Content-Type": "text/xml" },
