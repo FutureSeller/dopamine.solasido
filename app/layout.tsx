@@ -16,6 +16,29 @@ export const metadata: Metadata = {
       "naver-site-verification": "824e2b95f2f41885691ac159d870317ee120dc1d",
     },
   },
+  openGraph: {
+    url: "https://dopamine.solasido.design",
+    title: "그냥, 여우!",
+    description: "우당탕탕 여우의 신혼 일상툰",
+    type: "article",
+    images: [
+      {
+        url: "https://dopamine.solasido.design/opengraph-image.jpeg",
+        alt: "그냥, 여우!",
+      },
+    ],
+  },
+  twitter: {
+    title: "그냥, 여우!",
+    description: "우당탕탕 여우의 신혼 일상툰",
+    card: "summary_large_image",
+    images: [
+      {
+        url: "https://dopamine.solasido.design/twitter-image.jpeg",
+        alt: "그냥, 여우!",
+      },
+    ],
+  },
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {
