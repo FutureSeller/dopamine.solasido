@@ -1,5 +1,6 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -60,6 +61,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <body className={[inter.className, "pb-safe"].join(" ")}>
           <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
             {props.children}
+            <SpeedInsights />
           </main>
           <div id="modal-root" />
         </body>
