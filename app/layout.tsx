@@ -10,7 +10,16 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "그냥, 여우",
   description: "우당탕탕 여우의 신혼 일상툰",
-  keywords: ["여우", "그냥", "신혼", "일상", "인스타툰", "일상툰", "여우툰"],
+  keywords: [
+    "여우",
+    "그냥",
+    "신혼",
+    "일상",
+    "인스타툰",
+    "일상툰",
+    "여우툰",
+    "솔라시도",
+  ],
   verification: {
     other: {
       "naver-site-verification": "824e2b95f2f41885691ac159d870317ee120dc1d",
