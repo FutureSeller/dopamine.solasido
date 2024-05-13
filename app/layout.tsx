@@ -31,21 +31,19 @@ export const metadata: Metadata = {
     title: "그냥, 여우!",
     description: "우당탕탕 여우의 신혼 일상툰",
     type: "article",
-    images: [
-      {
-        url: "https://dopamine.solasido.design/opengraph-image.jpeg",
-        alt: "그냥, 여우!",
-      },
-    ],
+    images: ["https://dopamine.solasido.design/opengraph-image.jpeg"],
   },
   twitter: {
+    card: "summary_large_image",
     title: "그냥, 여우!",
     description: "우당탕탕 여우의 신혼 일상툰",
-    card: "summary_large_image",
+    creator: "@solasido_pamine",
     images: [
       {
         url: "https://dopamine.solasido.design/twitter-image.jpeg",
         alt: "그냥, 여우!",
+        width: 1200,
+        height: 630,
       },
     ],
   },
