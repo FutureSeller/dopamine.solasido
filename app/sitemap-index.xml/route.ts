@@ -25,7 +25,10 @@ export async function GET() {
             `https://dopamine.solasido.design/post/sitemap/${xmlId.id}.xml`
           )
         )
-        .join("")} 
+        .join("")}
+      ${generateSitemapLink(
+        `https://dopamine.solasido.design/tag/sitemap/0.xml`
+      )}
     </sitemapindex>
   `;
 
