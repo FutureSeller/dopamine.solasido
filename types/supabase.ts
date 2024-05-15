@@ -17,6 +17,7 @@ export type Database = {
           images: string[]
           link: string
           post_at: string
+          tag_id: number | null
           thumbnail: string
           title: string
           updated_at: string
@@ -28,9 +29,10 @@ export type Database = {
           images: string[]
           link: string
           post_at: string
+          tag_id?: number | null
           thumbnail: string
           title: string
-          updated_at: string
+          updated_at?: string
         }
         Update: {
           created_at?: string
@@ -39,11 +41,20 @@ export type Database = {
           images?: string[]
           link?: string
           post_at?: string
+          tag_id?: number | null
           thumbnail?: string
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "POST_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "TAG"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       PROFILE: {
         Row: {
@@ -74,6 +85,35 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      TAG: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          slug: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          slug?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          slug?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "TAG_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "TAG"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

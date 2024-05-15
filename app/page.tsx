@@ -12,6 +12,7 @@ import {
 import { getProfile } from "@/queries/get-profile";
 import { Profile } from "@/components/Profile";
 import { PostGridWithPagination } from "@/components/PostGridWithPagination";
+import { Tag } from "@/components/Tag";
 
 export const dynamic = "force-static";
 
@@ -19,6 +20,11 @@ export default async function Home() {
   const supabase = createClient();
   const queryClient = new QueryClient();
   const profile = await getProfile({ client: supabase });
+
+  const { data: tags } = await supabase
+    .from("TAG")
+    .select("name,slug")
+    .throwOnError();
 
   const { data: topPost } = await supabase
     .from("POST")
@@ -51,7 +57,20 @@ export default async function Home() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
         <Profile profile={profile} />
-        <PostGridWithPagination id={topPost.id} />
+        <PostGridWithPagination
+          id={topPost.id}
+          tags={
+            <nav>
+              <ul className="flex py-4 gap-2 overflow-x-scroll scrollbar-hide">
+                {tags?.map((tag) => (
+                  <li key={tag.name}>
+                    <Tag tag={tag} />
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          }
+        />
       </div>
     </HydrationBoundary>
   );

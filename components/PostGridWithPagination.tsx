@@ -10,8 +10,12 @@ import {
 } from "@/queries/get-posts";
 import { Spinner } from "./Spinner";
 import { LazyImage } from "./LazyLoadImage";
+import { ReactNode } from "react";
 
-export const PostGridWithPagination = (props: { id: number }) => {
+export const PostGridWithPagination = (props: {
+  id: number;
+  tags?: ReactNode;
+}) => {
   const supabase = useSupabaseBrowser();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery({
@@ -34,6 +38,7 @@ export const PostGridWithPagination = (props: { id: number }) => {
   return (
     <section>
       <h2 className="sr-only">여우툰 목록</h2>
+      <>{props.tags}</>
       <ul className="grid grid-cols-3 gap-1 py-1">
         {data?.pages.map((page) => {
           return page.posts?.map((post) => (
@@ -43,7 +48,7 @@ export const PostGridWithPagination = (props: { id: number }) => {
             >
               <Link
                 href={`/post/${post.id}`}
-                className="absolute block focus:outline-none focus:ring-1 focus:ring-amber-300 z-10"
+                className="absolute block focus:outline-none focus:ring-1 focus:ring-orange-300 z-10"
                 scroll={false}
                 passHref
               >
@@ -55,7 +60,7 @@ export const PostGridWithPagination = (props: { id: number }) => {
       </ul>
       {hasNextPage && (
         <button
-          className="flex justify-center items-center w-full mt-1 py-2 bg-amber-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex justify-center items-center w-full mt-1 py-2 bg-orange-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isFetchingNextPage}
           onClick={() => fetchNextPage()}
         >
