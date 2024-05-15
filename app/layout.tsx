@@ -54,17 +54,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <QueryProvider>
-      <html lang="ko">
-        <body className={[inter.className, "pb-safe"].join(" ")}>
+    <html lang="ko">
+      <body className={[inter.className, "pb-safe"].join(" ")}>
+        <QueryProvider>
           <main className="flex min-h-screen flex-col items-center justify-between py-4 sm:py-8 bg-black text-white">
             {props.children}
             <SpeedInsights />
           </main>
           <div id="modal-root" />
-        </body>
-        <GoogleAnalytics gaId="G-WF4EN5RSE1" />
-      </html>
-    </QueryProvider>
+        </QueryProvider>
+      </body>
+      <GoogleAnalytics gaId="G-WF4EN5RSE1" />
+    </html>
   );
 }

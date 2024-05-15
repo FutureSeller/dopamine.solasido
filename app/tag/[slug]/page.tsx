@@ -7,7 +7,11 @@ import {
   POST_PAGE_SIZE,
   getPostsByTag,
 } from "@/queries/get-posts";
-import { QueryClient } from "@tanstack/react-query";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 import { PostGridByTag } from "@/components/PostGridByTag";
 
 type Props = {
@@ -89,12 +93,14 @@ export default async function TagPage({ params: { slug } }: Props) {
   });
 
   return (
-    <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
-      <Profile profile={profile} />
-      <div className="py-2 w-full">
-        <h1 className="text-2xl font-bold text-white py-2">#{tag?.name}</h1>
-        <PostGridByTag id={topPost.id} slug={slug} />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
+        <Profile profile={profile} />
+        <div className="py-2 w-full">
+          <h2 className="text-2xl font-bold text-white py-2">#{tag?.name}</h2>
+          <PostGridByTag id={topPost.id} slug={slug} />
+        </div>
       </div>
-    </div>
+    </HydrationBoundary>
   );
 }

@@ -10,47 +10,50 @@ export const Profile = ({
   profile: Database["public"]["Tables"]["PROFILE"]["Row"] | null;
 }) => {
   return (
-    <div className="flex items-center border-b py-4">
-      <Link
-        className="block w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300 bg-gray-600"
-        href={"/"}
-      >
-        {profile?.profile && (
-          <LazyImage
-            wrapperClassName="relative z-10 w-full h-full"
-            className="absolute object-cover z-10 top-0 left-0 w-full h-full apsect-squre"
-            src={profile.profile}
-            alt=""
-          />
-        )}
-      </Link>
-      <div>
-        <h1 className="font-semibold text-xl">
+    <header>
+      <div className="flex items-center py-4">
+        <Link
+          className="block w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300 bg-gray-600"
+          href={"/"}
+        >
+          {profile?.profile && (
+            <LazyImage
+              wrapperClassName="relative z-10 w-full h-full"
+              className="absolute object-cover z-10 top-0 left-0 w-full h-full apsect-squre"
+              src={profile.profile}
+              alt=""
+            />
+          )}
+        </Link>
+        <div>
+          <h1 className="font-semibold text-xl">
+            <Link
+              href={profile?.link!}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-amber-500"
+            >
+              {profile?.title}
+            </Link>
+          </h1>
           <Link
             href={profile?.link!}
             target="_blank"
             rel="noreferrer"
-            className="hover:text-amber-500"
+            className="inline-block hover:text-amber-500 mb-1"
           >
-            {profile?.title}
+            @solasido.pamine
           </Link>
-        </h1>
-        <Link
-          href={profile?.link!}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-block hover:text-amber-500 mb-1"
-        >
-          @solasido.pamine
-        </Link>
-        <div>
-          {profile?.description.split("\n").map((v, index) => (
-            <p key={index} className="text-sm sm:text-sm">
-              {v}
-            </p>
-          ))}
+          <div>
+            {profile?.description.split("\n").map((v, index) => (
+              <p key={index} className="text-sm sm:text-sm">
+                {v}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <hr className="h-2 bg-gray-700 opacity-70 border-none" />
+    </header>
   );
 };

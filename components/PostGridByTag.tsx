@@ -34,7 +34,6 @@ export const PostGridByTag = (props: { id: number; slug: string }) => {
 
   return (
     <section>
-      <h2 className="sr-only">여우툰 목록</h2>
       <ul className="grid grid-cols-3 gap-1 py-1">
         {data?.pages.map((page) => {
           return page.posts?.map((post) => (
