@@ -2,8 +2,13 @@ import { Metadata, ResolvingMetadata } from "next";
 import { createClient } from "@/utils/supabase/server";
 import { Profile } from "@/components/Profile";
 import { getProfile } from "@/queries/get-profile";
-import Link from "next/link";
-import { LazyImage } from "@/components/LazyLoadImage";
+import {
+  GetPostByTagReturnType,
+  POST_PAGE_SIZE,
+  getPostsByTag,
+} from "@/queries/get-posts";
+import { QueryClient } from "@tanstack/react-query";
+import { PostGridByTag } from "@/components/PostGridByTag";
 
 type Props = {
   params: { slug: string };
@@ -46,6 +51,7 @@ export async function generateMetadata(
 
 export default async function TagPage({ params: { slug } }: Props) {
   const supabase = createClient();
+  const queryClient = new QueryClient();
   const profile = await getProfile({ client: supabase });
   const { data: tag } = await supabase
     .from("TAG")
@@ -54,36 +60,40 @@ export default async function TagPage({ params: { slug } }: Props) {
     .single()
     .throwOnError();
 
-  const { data: posts } = await supabase
+  const { data: topPost } = await supabase
     .from("POST")
-    .select("*, TAG!inner(*)")
+    .select("id, TAG!inner(*)")
     .order("id", { ascending: false })
-    .eq("TAG.slug", slug);
+    .eq("TAG.slug", slug)
+    .limit(1)
+    .single()
+    .throwOnError();
+
+  if (topPost?.id == null) {
+    return null;
+  }
+
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["posts", slug],
+    queryFn: async ({ pageParam }) => {
+      return await getPostsByTag({ client: supabase, id: pageParam, slug });
+    },
+    initialPageParam: topPost?.id + 1,
+    getNextPageParam: (lastPage: GetPostByTagReturnType) => {
+      if (!lastPage.posts?.length || lastPage.posts?.length < POST_PAGE_SIZE) {
+        return null;
+      }
+
+      return lastPage.posts[lastPage.posts.length - 1].id ?? null;
+    },
+  });
 
   return (
     <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
       <Profile profile={profile} />
       <div className="py-2 w-full">
         <h1 className="text-2xl font-bold text-white py-2">#{tag?.name}</h1>
-        <ul className="grid grid-cols-3 gap-1 py-1">
-          {posts?.map((post) => {
-            return (
-              <li
-                key={post.id}
-                className="relative hover:brightness-75 aspect-square transition-all duration-300 bg-gray-600"
-              >
-                <Link
-                  href={`/post/${post.id}`}
-                  className="absolute block focus:outline-none focus:ring-1 focus:ring-amber-300 z-10"
-                  scroll={false}
-                  passHref
-                >
-                  <LazyImage src={post.thumbnail} alt={post.title} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <PostGridByTag id={topPost.id} slug={slug} />
       </div>
     </div>
   );
