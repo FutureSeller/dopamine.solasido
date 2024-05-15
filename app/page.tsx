@@ -60,8 +60,8 @@ export default async function Home() {
         <PostGridWithPagination
           id={topPost.id}
           tags={
-            <nav>
-              <ul className="flex py-4 gap-2 overflow-x-scroll scrollbar-hide">
+            <nav className="flex items-center h-16">
+              <ul className="flex gap-2 overflow-x-scroll scrollbar-hide">
                 {tags?.map((tag) => (
                   <li key={tag.name}>
                     <Tag tag={tag} />
