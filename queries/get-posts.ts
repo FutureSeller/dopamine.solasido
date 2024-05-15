@@ -1,6 +1,6 @@
 import { TypedSupabaseClient } from "@/types/client";
 
-export const POST_PAGE_SIZE = 12;
+export const POST_PAGE_SIZE = 21;
 
 export async function getPosts(params: {
   client: TypedSupabaseClient;

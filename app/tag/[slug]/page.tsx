@@ -53,6 +53,7 @@ export default async function TagPage({ params: { slug } }: Props) {
     .eq("slug", slug)
     .single()
     .throwOnError();
+
   const { data: posts } = await supabase
     .from("POST")
     .select("*, TAG!inner(*)")

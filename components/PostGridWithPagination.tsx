@@ -11,6 +11,7 @@ import {
 import { Spinner } from "./Spinner";
 import { LazyImage } from "./LazyLoadImage";
 import { ReactNode } from "react";
+import { InfiniteScrollObserver } from "./InfiniteScrollObserver";
 
 export const PostGridWithPagination = (props: {
   id: number;
@@ -59,20 +60,13 @@ export const PostGridWithPagination = (props: {
         })}
       </ul>
       {hasNextPage && (
-        <button
-          className="flex justify-center items-center w-full mt-1 py-2 bg-orange-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={isFetchingNextPage}
-          onClick={() => fetchNextPage()}
-        >
+        <InfiniteScrollObserver onIntersect={fetchNextPage}>
           {isFetchingNextPage ? (
-            <>
-              <Spinner />
-              <span className="pl-2">불러오는중</span>
-            </>
-          ) : (
-            "더보기"
-          )}
-        </button>
+            <div className="flex justify-center items-center py-2">
+              <Spinner className="w-8 h-8" />
+            </div>
+          ) : null}
+        </InfiniteScrollObserver>
       )}
     </section>
   );
