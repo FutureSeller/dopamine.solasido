@@ -23,7 +23,7 @@ export default async function sitemap({
   return (
     posts?.map((post) => ({
       url: `https://dopamine.solasido.design/post/${post.id}`,
-      lastModified: post.updated_at,
+      lastModified: new Date().toISOString(),
     })) ?? []
   );
 }

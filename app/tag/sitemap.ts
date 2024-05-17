@@ -19,7 +19,7 @@ export default async function sitemap({
   return (
     tags?.map((tag) => ({
       url: `https://dopamine.solasido.design/tag/${tag.slug}`,
-      lastModified: tag.created_at,
+      lastModified: new Date().toISOString(),
     })) ?? []
   );
 }
