@@ -55,12 +55,12 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
+      <div className="w-full max-w-3xl min-w-[240px] px-4 sm:px-8">
         <Profile profile={profile} />
         <PostGridWithPagination
           id={topPost.id}
           tags={
-            <nav className="flex items-center h-16">
+            <nav className="flex items-center h-12 sm:h-16">
               <ul className="flex gap-2 overflow-x-scroll scrollbar-hide">
                 {tags?.map((tag) => (
                   <li key={tag.name}>

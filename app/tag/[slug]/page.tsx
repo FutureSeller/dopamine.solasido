@@ -94,11 +94,13 @@ export default async function TagPage({ params: { slug } }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="w-full max-w-3xl min-w-[320px] px-4 sm:px-8">
+      <div className="w-full max-w-3xl min-w-[240px] px-4 sm:px-8">
         <Profile profile={profile} />
         <div className="w-full">
-          <div className="flex items-center h-16">
-            <h2 className="text-2xl font-bold text-white">#{tag?.name}</h2>
+          <div className="flex items-center h-12 sm:h-16">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">
+              #{tag?.name}
+            </h2>
           </div>
           <PostGridByTag id={topPost.id} slug={slug} />
         </div>

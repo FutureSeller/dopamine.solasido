@@ -40,7 +40,7 @@ export const PostGridWithPagination = (props: {
     <section>
       <h2 className="sr-only">여우툰 목록</h2>
       <>{props.tags}</>
-      <ul className="grid grid-cols-3 gap-1 py-1">
+      <ul className="grid grid-cols-2 sm:grid-cols-3 gap-1 py-1">
         {data?.pages.map((page) => {
           return page.posts?.map((post) => (
             <li

@@ -17,8 +17,8 @@ export const PostDescription = ({
 
   return (
     <div className="p-4 text-white">
-      <h2 className="text-xl font-semibold">{post.title}</h2>
-      <p className="pt-2 break-keep">{post.description}</p>
+      <h2 className="text-base sm:text-xl font-semibold">{post.title}</h2>
+      <p className="text-sm sm:text-base pt-2 break-keep">{post.description}</p>
     </div>
   );
 };

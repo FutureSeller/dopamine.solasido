@@ -12,7 +12,7 @@ export const Profile = ({
   return (
     <header className="flex items-center border-b py-4">
       <Link
-        className="block w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-8 sm:mr-8 hover:brightness-75 transition-all duration-300 bg-gray-600"
+        className="block w-[80px] h-[80px] sm:w-[120px] sm:h-[120px] rounded-full overflow-hidden mr-4 sm:mr-8 hover:brightness-75 transition-all duration-300 bg-gray-600"
         href={"/"}
       >
         {profile?.profile && (
@@ -25,7 +25,7 @@ export const Profile = ({
         )}
       </Link>
       <div>
-        <h1 className="font-semibold text-xl">
+        <h1 className="font-semibold text-base sm:text-xl">
           <Link
             href={profile?.link!}
             target="_blank"
@@ -39,13 +39,13 @@ export const Profile = ({
           href={profile?.link!}
           target="_blank"
           rel="noreferrer"
-          className="inline-block hover:text-amber-500 mb-1"
+          className="inline-block text-sm sm:text-base hover:text-amber-500 mb-1"
         >
           @solasido.pamine
         </Link>
         <div>
           {profile?.description.split("\n").map((v, index) => (
-            <p key={index} className="text-sm sm:text-sm">
+            <p key={index} className="text-xs sm:text-sm">
               {v}
             </p>
           ))}

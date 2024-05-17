@@ -9,7 +9,7 @@ export const PostGrid = ({
   if (posts === null) return null;
 
   return (
-    <ul className="grid grid-cols-3 gap-1 py-1">
+    <ul className="grid grid-cols-2 sm:grid-cols-3 gap-1 py-1">
       {posts.map((post) => (
         <li
           key={post.id}
