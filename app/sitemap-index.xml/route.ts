@@ -18,16 +18,16 @@ export async function GET() {
 
   const sitemapIndexXML = `<?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${generateSitemapLink("https://dopamine.solasido.design/sitemap.xml")}
+      ${generateSitemapLink("https://dopamine.solasido.world/sitemap.xml")}
       ${postXmls
         .map((xmlId) =>
           generateSitemapLink(
-            `https://dopamine.solasido.design/post/sitemap/${xmlId.id}.xml`
+            `https://dopamine.solasido.world/post/sitemap/${xmlId.id}.xml`
           )
         )
         .join("")}
       ${generateSitemapLink(
-        `https://dopamine.solasido.design/tag/sitemap/0.xml`
+        `https://dopamine.solasido.world/tag/sitemap/0.xml`
       )}
     </sitemapindex>
   `;

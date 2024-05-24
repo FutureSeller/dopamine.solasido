@@ -25,7 +25,7 @@ export async function generateMetadata(
     description: post?.description || (await parent).description,
     keywords: (await parent).keywords,
     openGraph: {
-      url: `https://dopamine.solasido.design/post/${params.id}`,
+      url: `https://dopamine.solasido.world/post/${params.id}`,
       title: `${post?.title || ""} | 그냥, 여우!`,
       description: post?.description || "우당탕탕 여우의 신혼 일상툰",
       images: post?.thumbnail,

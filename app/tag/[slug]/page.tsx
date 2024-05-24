@@ -41,7 +41,7 @@ export async function generateMetadata(
       `${tag?.name} 관련 에피소드 모음` || (await parent).description,
     keywords: (await parent).keywords,
     openGraph: {
-      url: `https://dopamine.solasido.design/tag/${params.slug}`,
+      url: `https://dopamine.solasido.world/tag/${params.slug}`,
       title: `태그 - ${tag?.name} | 그냥, 여우!`,
       description: `${tag?.name} 관련 에피소드 모음 | 우당탕탕 여우의 신혼 일상툰`,
       type: "article",

@@ -23,15 +23,15 @@ export const metadata: Metadata = {
   ],
   verification: {
     other: {
-      "naver-site-verification": "824e2b95f2f41885691ac159d870317ee120dc1d",
+      "naver-site-verification": "55618a448f3dd4d5ac9ac66d2e74c65530b8cdc7",
     },
   },
   openGraph: {
-    url: "https://dopamine.solasido.design",
+    url: "https://dopamine.solasido.world",
     title: "그냥, 여우!",
     description: "우당탕탕 여우의 신혼 일상툰",
     type: "article",
-    images: ["https://dopamine.solasido.design/opengraph-image.jpeg"],
+    images: ["https://dopamine.solasido.world/opengraph-image.jpeg"],
   },
   twitter: {
     card: "summary_large_image",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     creator: "@solasido_pamine",
     images: [
       {
-        url: "https://dopamine.solasido.design/twitter-image.jpeg",
+        url: "https://dopamine.solasido.world/twitter-image.jpeg",
         alt: "그냥, 여우!",
         width: 1200,
         height: 630,
