@@ -22,7 +22,8 @@ export const PostDescription = ({
         <Link
           href={post.link}
           className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
-          scroll={false}
+          target="_blank"
+          rel="noreferrer"
           passHref
         >
           {post.title}
