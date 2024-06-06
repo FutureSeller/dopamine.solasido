@@ -78,7 +78,7 @@ export default async function TagPage({ params: { slug } }: Props) {
   }
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts", slug],
+    queryKey: ["posts", "tag", slug],
     queryFn: async ({ pageParam }) => {
       return await getPostsByTag({ client: supabase, id: pageParam, slug });
     },

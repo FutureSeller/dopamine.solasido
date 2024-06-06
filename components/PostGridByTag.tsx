@@ -16,7 +16,7 @@ export const PostGridByTag = (props: { id: number; slug: string }) => {
   const supabase = useSupabaseBrowser();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useInfiniteQuery({
-      queryKey: ["posts", props.slug],
+      queryKey: ["posts", "tag", props.slug],
       queryFn: async ({ pageParam }) =>
         getPostsByTag({ client: supabase, id: pageParam, slug: props.slug }),
       initialPageParam: props?.id,
