@@ -1,4 +1,5 @@
 import { Database } from "@/types/supabase";
+import Link from "next/link";
 
 export const PostDescription = ({
   post,
@@ -17,7 +18,16 @@ export const PostDescription = ({
 
   return (
     <div className="p-4 text-white">
-      <h2 className="text-base sm:text-xl font-semibold">{post.title}</h2>
+      <h2 className="text-base sm:text-xl font-semibold">
+        <Link
+          href={post.link}
+          className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
+          scroll={false}
+          passHref
+        >
+          {post.title}
+        </Link>
+      </h2>
       <p className="text-sm sm:text-base pt-2 break-keep">{post.description}</p>
     </div>
   );
