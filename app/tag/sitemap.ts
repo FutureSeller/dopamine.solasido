@@ -1,25 +1,25 @@
-import { createClient } from "@/utils/supabase/server";
-import { MetadataRoute } from "next";
+import { createClient } from '@/utils/supabase/server';
+import { MetadataRoute } from 'next';
 
 export async function generateSitemaps() {
-  return [{ id: 0 }];
+	return [{ id: 0 }];
 }
 
 export default async function sitemap({
-  id,
+	id,
 }: {
-  id: number;
+	id: number;
 }): Promise<MetadataRoute.Sitemap> {
-  const start = id * 50000;
-  const end = start + 50000;
+	const start = id * 50000;
+	const end = start + 50000;
 
-  const supabase = createClient();
-  const { data: tags } = await supabase.from("TAG").select().range(start, end);
+	const supabase = createClient();
+	const { data: tags } = await supabase.from('TAG').select().range(start, end);
 
-  return (
-    tags?.map((tag) => ({
-      url: `https://dopamine.solasido.world/tag/${tag.slug}`,
-      lastModified: new Date().toISOString(),
-    })) ?? []
-  );
+	return (
+		tags?.map((tag) => ({
+			url: `https://dopamine.solasido.world/tag/${tag.slug}`,
+			lastModified: new Date().toISOString(),
+		})) ?? []
+	);
 }

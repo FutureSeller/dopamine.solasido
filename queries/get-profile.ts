@@ -1,11 +1,11 @@
-import { TypedSupabaseClient } from "@/types/client";
+import { TypedSupabaseClient } from '@/types/client';
 
 export async function getProfile(params: { client: TypedSupabaseClient }) {
-  const { data: profile } = await params.client
-    .from("PROFILE")
-    .select()
-    .single()
-    .throwOnError();
+	const { data: profile } = await params.client
+		.from('PROFILE')
+		.select()
+		.single()
+		.throwOnError();
 
-  return profile;
+	return profile;
 }
