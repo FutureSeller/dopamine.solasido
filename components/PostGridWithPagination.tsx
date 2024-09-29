@@ -50,7 +50,6 @@ export const PostGridWithPagination = (props: {
 							<Link
 								href={`/post/${post.id}`}
 								className="absolute block focus:outline-none focus:ring-1 focus:ring-orange-300 z-10"
-								scroll={false}
 								prefetch={false}
 								passHref
 							>
