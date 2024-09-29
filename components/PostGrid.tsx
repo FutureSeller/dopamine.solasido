@@ -19,6 +19,7 @@ export const PostGrid = ({
 						href={`/post/${post.id}`}
 						className="block focus:outline-none focus:ring-1 focus:ring-amber-300"
 						scroll={false}
+						prefetch={false}
 						passHref
 					>
 						<img src={post.thumbnail} alt={post.title} />
