@@ -79,9 +79,9 @@ export default async function PostPage({ params: { id } }: Props) {
 				<PostDescription post={post} />
 				<PostList post={post} />
 				<div className="flex justify-between items-center border-t py-4 mt-auto">
-					{nextPostId ? (
+					{prevPostId ? (
 						<Link
-							href={`/post/${nextPostId}`}
+							href={`/post/${prevPostId}`}
 							className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
 							prefetch={false}
 							passHref
@@ -91,6 +91,7 @@ export default async function PostPage({ params: { id } }: Props) {
 					) : (
 						<span></span>
 					)}
+
 					<Link
 						href="/"
 						className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
@@ -99,9 +100,9 @@ export default async function PostPage({ params: { id } }: Props) {
 					>
 						<Home />
 					</Link>
-					{prevPostId ? (
+					{nextPostId ? (
 						<Link
-							href={`/post/${prevPostId}`}
+							href={`/post/${nextPostId}`}
 							className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
 							prefetch={false}
 							passHref
