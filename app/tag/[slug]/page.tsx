@@ -1,5 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import { createClient } from '@/utils/supabase/server';
+import { createDefaultClient } from '@/utils/supabase/default-client';
 import { Profile } from '@/components/Profile';
 import { getProfile } from '@/queries/get-profile';
 import {
@@ -19,7 +20,21 @@ type Props = {
 	searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export const dynamic = 'force-static';
+export async function generateStaticParams() {
+	try {
+		const supabase = createDefaultClient();
+		const { data: tags } = await supabase.from('TAG').select();
+
+		return (
+			tags?.map((tag) => ({
+				slug: tag.slug,
+			})) ?? []
+		);
+	} catch (e) {
+		console.error(e);
+		return [];
+	}
+}
 
 export async function generateMetadata(
 	{ params }: Props,
