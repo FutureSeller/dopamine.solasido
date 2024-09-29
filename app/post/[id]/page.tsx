@@ -1,5 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import { createClient } from '@/utils/supabase/server';
+import { createDefaultClient } from '@/utils/supabase/default-client';
 import { PostSwiper } from '@/components/Swiper/PostSwiper';
 import { PostDescription } from '@/components/PostDescription';
 import { Profile } from '@/components/Profile';
@@ -11,7 +12,24 @@ type Props = {
 	searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export const dynamic = 'force-static';
+export async function generateStaticParams() {
+	try {
+		const supabase = createDefaultClient();
+		const { data: posts } = await supabase
+			.from('POST')
+			.select('*')
+			.order('id', { ascending: false });
+
+		return (
+			posts?.map((post) => ({
+				id: post.id.toString(),
+			})) ?? []
+		);
+	} catch (e) {
+		console.error(e);
+		return [];
+	}
+}
 
 export async function generateMetadata(
 	{ params }: Props,
