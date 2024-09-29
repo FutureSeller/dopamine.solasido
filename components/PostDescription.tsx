@@ -17,7 +17,7 @@ export const PostDescription = ({
 	}
 
 	return (
-		<div className="p-4 text-white">
+		<div className="py-4 text-white">
 			<h2 className="text-base sm:text-xl font-semibold">
 				<Link
 					href={post.link}
