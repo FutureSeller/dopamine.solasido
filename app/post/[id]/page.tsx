@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import { createClient } from '@/utils/supabase/server';
 import { createDefaultClient } from '@/utils/supabase/default-client';
-import { PostList } from '@/components/PostList';
+import { PostList } from '../_components/PostList';
 import { PostDescription } from '@/components/PostDescription';
 import { Profile } from '@/components/Profile';
 import { getPostById } from '@/queries/get-post-by-id';

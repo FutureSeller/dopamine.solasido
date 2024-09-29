@@ -4,16 +4,12 @@ import { createDefaultClient } from '@/utils/supabase/default-client';
 import { Profile } from '@/components/Profile';
 import { getProfile } from '@/queries/get-profile';
 import {
-	GetPostByTagReturnType,
-	POST_PAGE_SIZE,
-	getPostsByTag,
-} from '@/queries/get-posts';
-import {
 	HydrationBoundary,
 	QueryClient,
 	dehydrate,
 } from '@tanstack/react-query';
-import { PostGridByTag } from '@/components/PostGridByTag';
+import { TaggedPostPagination } from '../_components/TaggedPostPagination';
+import { PostGridSection } from '@/components/PostGridSection';
 
 type Props = {
 	params: { slug: string };
@@ -79,45 +75,19 @@ export default async function TagPage({ params: { slug } }: Props) {
 		.single()
 		.throwOnError();
 
-	const { data: topPost } = await supabase
-		.from('POST')
-		.select('id, TAG!inner(*)')
-		.order('id', { ascending: false })
-		.eq('TAG.slug', slug)
-		.limit(1)
-		.single()
-		.throwOnError();
-
-	if (topPost?.id == null) {
-		return null;
-	}
-
-	await queryClient.prefetchInfiniteQuery({
-		queryKey: ['posts', 'tag', slug, topPost.id],
-		queryFn: async ({ pageParam }) => {
-			return await getPostsByTag({ client: supabase, id: pageParam, slug });
-		},
-		initialPageParam: topPost?.id + 1,
-		getNextPageParam: (lastPage: GetPostByTagReturnType) => {
-			if (!lastPage.posts?.length || lastPage.posts?.length < POST_PAGE_SIZE) {
-				return null;
-			}
-
-			return lastPage.posts[lastPage.posts.length - 1].id ?? null;
-		},
-	});
-
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<div className="w-full max-w-3xl min-w-[240px] px-4 sm:px-8">
 				<Profile profile={profile} />
 				<div className="w-full">
-					<div className="flex items-center h-12 sm:h-16">
+					<div className="flex items-center h-10 sm:h-14">
 						<h2 className="text-xl sm:text-2xl font-bold text-white">
 							#{tag?.name}
 						</h2>
 					</div>
-					<PostGridByTag id={topPost.id} slug={slug} />
+					<PostGridSection>
+						<TaggedPostPagination slug={slug} />
+					</PostGridSection>
 				</div>
 			</div>
 		</HydrationBoundary>

@@ -1,5 +1,5 @@
 import { Database } from '@/types/supabase';
-import { LazyImage } from './LazyLoadImage';
+import { LazyImage } from '../../../components/LazyLoadImage';
 
 export const PostList = ({
 	post,

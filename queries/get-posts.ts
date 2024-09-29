@@ -43,20 +43,36 @@ export async function getPostsByTag(params: {
   client: TypedSupabaseClient;
   slug: string;
   id?: number;
+  order?: string;
 }) {
-  const { data: posts } = await params.client
+  const queryBuilder = params.client
     .from("POST")
     .select("*, TAG!inner(*)")
-    .order("id", { ascending: false })
-    .lt("id", params.id)
+    .order("id", { ascending: params.order === "asc" })
     .eq("TAG.slug", params.slug)
     .limit(POST_PAGE_SIZE)
     .throwOnError();
 
+  const { data: posts } =
+    params.order === "asc"
+      ? await queryBuilder.gte("id", params.id)
+      : await queryBuilder.lte("id", params.id);
+
+  if (!posts) {
+    return {
+      posts: [],
+      id: null,
+    };
+  }
+
+  const lastPostId =
+    params.order === "asc"
+      ? Number(posts[posts?.length - 1].id) + 1
+      : Number(posts[posts?.length - 1].id) - 1;
+
   return {
     posts,
-    id:
-      posts && posts.length > 0 ? Number(posts[posts.length - 1].id) - 1 : null,
+    id: lastPostId,
   };
 }
 

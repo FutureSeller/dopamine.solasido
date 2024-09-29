@@ -1,6 +1,6 @@
 import { GetPostByIdReturnType } from '@/queries/get-post-by-id';
 import Link from 'next/link';
-import { Tag } from './Tag';
+import { HashTag } from './HashTag';
 
 export const PostDescription = ({
 	post,
@@ -32,7 +32,7 @@ export const PostDescription = ({
 			</h2>
 			<p className="text-sm sm:text-base pt-2 break-keep">{post.description}</p>
 			<div className="w-fit">
-				<Tag tag={post.TAG} />
+				<HashTag tag={post.TAG} />
 			</div>
 		</div>
 	);

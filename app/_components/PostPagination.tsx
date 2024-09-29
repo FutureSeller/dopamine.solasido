@@ -1,33 +1,47 @@
 'use client';
 
-import Link from 'next/link';
-import useSupabaseBrowser from '@/utils/supabase/client';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { InfiniteScrollObserver } from '@/components/InfiniteScrollObserver';
+import { LazyImage } from '@/components/LazyLoadImage';
+import { Spinner } from '@/components/Spinner';
 import {
 	GetPostReturnType,
-	POST_PAGE_SIZE,
 	getPosts,
+	POST_PAGE_SIZE,
 } from '@/queries/get-posts';
-import { Spinner } from './Spinner';
-import { LazyImage } from './LazyLoadImage';
-import { ReactNode } from 'react';
-import { InfiniteScrollObserver } from './InfiniteScrollObserver';
+import useSupabaseBrowser from '@/utils/supabase/client';
+import {
+	useSuspenseInfiniteQuery,
+	useSuspenseQuery,
+} from '@tanstack/react-query';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-export const PostGridWithPagination = (props: {
-	id: number;
-	filters?: ReactNode;
-}) => {
+export const PostPagination = () => {
 	const searchParams = useSearchParams();
 	const order = searchParams.get('order') ?? 'desc';
-
 	const supabase = useSupabaseBrowser();
+
+	const { data: topPost } = useSuspenseQuery({
+		queryKey: ['top-post', order],
+		queryFn: async () => {
+			const { data } = await supabase
+				.from('POST')
+				.select('id')
+				.order('id', { ascending: order === 'asc' })
+				.limit(1)
+				.single()
+				.throwOnError();
+
+			return data;
+		},
+	});
+
 	const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
-		useInfiniteQuery({
+		useSuspenseInfiniteQuery({
 			queryKey: ['posts', order],
 			queryFn: async ({ pageParam }) =>
 				await getPosts({ client: supabase, id: pageParam, order: order }),
-			initialPageParam: props.id,
+			initialPageParam: topPost?.id,
 			getNextPageParam: (lastPage: GetPostReturnType) => {
 				if (
 					!lastPage.posts?.length ||
@@ -41,9 +55,7 @@ export const PostGridWithPagination = (props: {
 		});
 
 	return (
-		<section>
-			<h2 className="sr-only">여우툰 목록</h2>
-			<>{props.filters}</>
+		<>
 			<ul className="grid grid-cols-2 sm:grid-cols-3 gap-1 py-1">
 				{data?.pages.map((page) => {
 					return page.posts?.map((post) => (
@@ -72,6 +84,6 @@ export const PostGridWithPagination = (props: {
 					) : null}
 				</InfiniteScrollObserver>
 			)}
-		</section>
+		</>
 	);
 };
