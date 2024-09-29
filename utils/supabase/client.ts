@@ -6,20 +6,20 @@ import { TypedSupabaseClient } from '@/types/client';
 let client: TypedSupabaseClient | undefined;
 
 const createClient = () => {
-	if (client) {
-		return client;
-	}
+  if (client) {
+    return client;
+  }
 
-	client = createBrowserClient<Database>(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-	);
+  client = createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
 
-	return client;
+  return client;
 };
 
 function useSupabaseBrowser() {
-	return useMemo(createClient, []);
+  return useMemo(createClient, []);
 }
 
 export default useSupabaseBrowser;
