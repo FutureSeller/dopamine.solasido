@@ -1,47 +1,63 @@
-import { TypedSupabaseClient } from '@/types/client';
+import { TypedSupabaseClient } from "@/types/client";
 
 export const POST_PAGE_SIZE = 21;
 
 export async function getPosts(params: {
-	client: TypedSupabaseClient;
-	id?: number;
+  client: TypedSupabaseClient;
+  order?: string;
+  id?: number;
 }) {
-	const { data: posts } = await params.client
-		.from('POST')
-		.select('*')
-		.order('id', { ascending: false })
-		.lt('id', params.id)
-		.limit(POST_PAGE_SIZE)
-		.throwOnError();
+  const queryBuilder = params.client
+    .from("POST")
+    .select("*")
+    .order("id", { ascending: params.order === "asc" })
+    .limit(POST_PAGE_SIZE)
+    .throwOnError();
 
-	return {
-		posts,
-		id:
-			posts && posts.length > 0 ? Number(posts[posts.length - 1].id) - 1 : null,
-	};
+  const { data: posts } =
+    params.order === "asc"
+      ? await queryBuilder.gte("id", params.id)
+      : await queryBuilder.lte("id", params.id);
+
+  if (!posts) {
+    return {
+      posts: [],
+      id: null,
+    };
+  }
+
+  const lastPostId =
+    params.order === "asc"
+      ? Number(posts[posts?.length - 1].id) + 1
+      : Number(posts[posts?.length - 1].id) - 1;
+
+  return {
+    posts,
+    id: lastPostId,
+  };
 }
 
 export type GetPostReturnType = Awaited<ReturnType<typeof getPosts>>;
 
 export async function getPostsByTag(params: {
-	client: TypedSupabaseClient;
-	slug: string;
-	id?: number;
+  client: TypedSupabaseClient;
+  slug: string;
+  id?: number;
 }) {
-	const { data: posts } = await params.client
-		.from('POST')
-		.select('*, TAG!inner(*)')
-		.order('id', { ascending: false })
-		.lt('id', params.id)
-		.eq('TAG.slug', params.slug)
-		.limit(POST_PAGE_SIZE)
-		.throwOnError();
+  const { data: posts } = await params.client
+    .from("POST")
+    .select("*, TAG!inner(*)")
+    .order("id", { ascending: false })
+    .lt("id", params.id)
+    .eq("TAG.slug", params.slug)
+    .limit(POST_PAGE_SIZE)
+    .throwOnError();
 
-	return {
-		posts,
-		id:
-			posts && posts.length > 0 ? Number(posts[posts.length - 1].id) - 1 : null,
-	};
+  return {
+    posts,
+    id:
+      posts && posts.length > 0 ? Number(posts[posts.length - 1].id) - 1 : null,
+  };
 }
 
 export type GetPostByTagReturnType = Awaited<ReturnType<typeof getPostsByTag>>;

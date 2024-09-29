@@ -1,10 +1,11 @@
-import { Database } from '@/types/supabase';
+import { GetPostByIdReturnType } from '@/queries/get-post-by-id';
 import Link from 'next/link';
+import { Tag } from './Tag';
 
 export const PostDescription = ({
 	post,
 }: {
-	post: Database['public']['Tables']['POST']['Row'] | null;
+	post: GetPostByIdReturnType | null;
 }) => {
 	if (post === null) {
 		return (
@@ -30,6 +31,9 @@ export const PostDescription = ({
 				</Link>
 			</h2>
 			<p className="text-sm sm:text-base pt-2 break-keep">{post.description}</p>
+			<div className="w-fit">
+				<Tag tag={post.TAG} />
+			</div>
 		</div>
 	);
 };

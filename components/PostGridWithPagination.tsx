@@ -12,18 +12,22 @@ import { Spinner } from './Spinner';
 import { LazyImage } from './LazyLoadImage';
 import { ReactNode } from 'react';
 import { InfiniteScrollObserver } from './InfiniteScrollObserver';
+import { useSearchParams } from 'next/navigation';
 
 export const PostGridWithPagination = (props: {
 	id: number;
-	tags?: ReactNode;
+	filters?: ReactNode;
 }) => {
+	const searchParams = useSearchParams();
+	const order = searchParams.get('order') ?? 'desc';
+
 	const supabase = useSupabaseBrowser();
 	const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
 		useInfiniteQuery({
-			queryKey: ['posts'],
+			queryKey: ['posts', order],
 			queryFn: async ({ pageParam }) =>
-				getPosts({ client: supabase, id: pageParam }),
-			initialPageParam: props?.id,
+				await getPosts({ client: supabase, id: pageParam, order: order }),
+			initialPageParam: props.id,
 			getNextPageParam: (lastPage: GetPostReturnType) => {
 				if (
 					!lastPage.posts?.length ||
@@ -32,14 +36,14 @@ export const PostGridWithPagination = (props: {
 					return null;
 				}
 
-				return lastPage.posts[lastPage.posts.length - 1].id ?? null;
+				return lastPage.id;
 			},
 		});
 
 	return (
 		<section>
 			<h2 className="sr-only">여우툰 목록</h2>
-			<>{props.tags}</>
+			<>{props.filters}</>
 			<ul className="grid grid-cols-2 sm:grid-cols-3 gap-1 py-1">
 				{data?.pages.map((page) => {
 					return page.posts?.map((post) => (

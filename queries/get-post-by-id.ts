@@ -6,10 +6,12 @@ export async function getPostById(params: {
 }) {
   const { data: post } = await params.client
     .from("POST")
-    .select()
+    .select("*, TAG!inner(*)")
     .eq("id", params.id)
     .single()
     .throwOnError();
 
   return post;
 }
+
+export type GetPostByIdReturnType = Awaited<ReturnType<typeof getPostById>>;

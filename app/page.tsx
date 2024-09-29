@@ -12,24 +12,19 @@ import {
 import { getProfile } from '@/queries/get-profile';
 import { Profile } from '@/components/Profile';
 import { PostGridWithPagination } from '@/components/PostGridWithPagination';
-import { Tag } from '@/components/Tag';
+import Link from 'next/link';
 
-export const dynamic = 'force-static';
-
-export default async function Home() {
+export default async function Home({
+	searchParams,
+}: { searchParams: { [key: string]: string | undefined } }) {
 	const supabase = createClient();
 	const queryClient = new QueryClient();
 	const profile = await getProfile({ client: supabase });
 
-	const { data: tags } = await supabase
-		.from('TAG')
-		.select('name,slug')
-		.throwOnError();
-
 	const { data: topPost } = await supabase
 		.from('POST')
 		.select('id')
-		.order('id', { ascending: false })
+		.order('id', { ascending: searchParams.order === 'asc' })
 		.limit(1)
 		.single()
 		.throwOnError();
@@ -39,17 +34,21 @@ export default async function Home() {
 	}
 
 	await queryClient.prefetchInfiniteQuery({
-		queryKey: ['posts'],
+		queryKey: ['posts', searchParams.order ?? 'desc'],
 		queryFn: async ({ pageParam }) => {
-			return await getPosts({ client: supabase, id: pageParam });
+			return await getPosts({
+				client: supabase,
+				id: pageParam,
+				order: searchParams.order,
+			});
 		},
-		initialPageParam: topPost?.id + 1,
+		initialPageParam: topPost.id,
 		getNextPageParam: (lastPage: GetPostReturnType) => {
 			if (!lastPage.posts?.length || lastPage.posts?.length < POST_PAGE_SIZE) {
 				return null;
 			}
 
-			return lastPage.posts[lastPage.posts.length - 1].id ?? null;
+			return lastPage.id;
 		},
 	});
 
@@ -59,15 +58,33 @@ export default async function Home() {
 				<Profile profile={profile} />
 				<PostGridWithPagination
 					id={topPost.id}
-					tags={
-						<nav className="flex items-center h-12 sm:h-16">
-							<ul className="flex gap-2 overflow-x-scroll scrollbar-hide">
-								{tags?.map((tag) => (
-									<li key={tag.name}>
-										<Tag tag={tag} />
-									</li>
-								))}
-							</ul>
+					filters={
+						<nav className="flex justify-end py-2 [&>*]:ml-2">
+							<Link
+								href="/?order=desc"
+								className={[
+									'block text-sm hover:text-amber-500 sm:text-base',
+									searchParams.order !== 'asc' && 'text-amber-500',
+								].join(' ')}
+								prefetch={false}
+								replace
+								passHref
+							>
+								최신화부터 보기
+							</Link>
+							<span className="not-sr-only">|</span>
+							<Link
+								href="/?order=asc"
+								className={[
+									'block text-sm hover:text-amber-500 sm:text-base',
+									searchParams.order === 'asc' && 'text-amber-500',
+								].join(' ')}
+								prefetch={false}
+								replace
+								passHref
+							>
+								첫화부터 보기
+							</Link>
 						</nav>
 					}
 				/>
