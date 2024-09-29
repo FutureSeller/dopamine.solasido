@@ -9,6 +9,7 @@ import { Profile } from '@/components/Profile';
 import { PostGridSection } from '@/components/PostGridSection';
 import { PostPagination } from './_components/PostPagination';
 import { Tag } from '@/components/Tag';
+import { PostOrderFilter } from '@/components/PostOrderFilter';
 
 export const dynamic = 'force-static';
 
@@ -35,6 +36,7 @@ export default async function Home() {
 						))}
 					</ul>
 				</nav>
+				<PostOrderFilter />
 				<PostGridSection>
 					<PostPagination />
 				</PostGridSection>

@@ -3,6 +3,7 @@
 import { Database } from '@/types/supabase';
 import Link from 'next/link';
 import { LazyImage } from './LazyLoadImage';
+import { Instagram } from './icons/Instagram';
 
 export const Profile = ({
 	profile,
@@ -25,23 +26,15 @@ export const Profile = ({
 				)}
 			</Link>
 			<div>
-				<h1 className="font-semibold text-base sm:text-xl">
-					<Link
-						href={profile?.link!}
-						target="_blank"
-						rel="noreferrer"
-						className="hover:text-amber-500"
-					>
-						{profile?.title}
-					</Link>
-				</h1>
+				<h1 className="font-semibold text-base sm:text-xl">{profile?.title}</h1>
 				<Link
 					href={profile?.link!}
 					target="_blank"
 					rel="noreferrer"
-					className="inline-block text-sm sm:text-base hover:text-amber-500 mb-1"
+					className="inline-flex items-center text-sm sm:text-base hover:text-amber-500"
 				>
-					@solasido.pamine
+					<Instagram aria-hidden />
+					solasido.pamine
 				</Link>
 				<div>
 					{profile?.description.split('\n').map((v, index) => (

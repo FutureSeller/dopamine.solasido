@@ -78,40 +78,40 @@ export default async function PostPage({ params: { id } }: Props) {
 			<div className="py-2 w-full">
 				<PostDescription post={post} />
 				<PostList post={post} />
-			</div>
-			<div className="flex justify-between items-center">
-				{nextPostId ? (
+				<div className="flex justify-between items-center border-t py-4 mt-auto">
+					{nextPostId ? (
+						<Link
+							href={`/post/${nextPostId}`}
+							className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
+							prefetch={false}
+							passHref
+						>
+							<ChevronLeft />
+						</Link>
+					) : (
+						<span></span>
+					)}
 					<Link
-						href={`/post/${nextPostId}`}
+						href="/"
 						className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
 						prefetch={false}
 						passHref
 					>
-						<ChevronLeft />
+						<Home />
 					</Link>
-				) : (
-					<span></span>
-				)}
-				<Link
-					href="/"
-					className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
-					prefetch={false}
-					passHref
-				>
-					<Home />
-				</Link>
-				{prevPostId ? (
-					<Link
-						href={`/post/${prevPostId}`}
-						className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
-						prefetch={false}
-						passHref
-					>
-						<ChevronRight />
-					</Link>
-				) : (
-					<span></span>
-				)}
+					{prevPostId ? (
+						<Link
+							href={`/post/${prevPostId}`}
+							className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
+							prefetch={false}
+							passHref
+						>
+							<ChevronRight />
+						</Link>
+					) : (
+						<span></span>
+					)}
+				</div>
 			</div>
 		</div>
 	);

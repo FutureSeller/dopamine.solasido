@@ -1,6 +1,7 @@
 import { GetPostByIdReturnType } from '@/queries/get-post-by-id';
 import Link from 'next/link';
 import { HashTag } from './HashTag';
+import { Instagram } from './icons/Instagram';
 
 export const PostDescription = ({
 	post,
@@ -22,12 +23,13 @@ export const PostDescription = ({
 			<h2 className="text-base sm:text-xl font-semibold">
 				<Link
 					href={post.link}
-					className="block focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
+					className="flex items-center focus:outline-none focus:ring-1 focus:ring-amber-300 hover:text-amber-500"
 					target="_blank"
 					rel="noreferrer"
 					passHref
 				>
 					{post.title}
+					<Instagram className="ml-1" aria-hidden />
 				</Link>
 			</h2>
 			<p className="text-sm sm:text-base pt-2 break-keep">{post.description}</p>

@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-query';
 import { TaggedPostPagination } from '../_components/TaggedPostPagination';
 import { PostGridSection } from '@/components/PostGridSection';
+import { PostOrderFilter } from '@/components/PostOrderFilter';
 
 type Props = {
 	params: { slug: string };
@@ -79,11 +80,12 @@ export default async function TagPage({ params: { slug } }: Props) {
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<div className="w-full max-w-3xl min-w-[240px] px-4 sm:px-8">
 				<Profile profile={profile} />
-				<div className="w-full">
-					<div className="flex items-center h-10 sm:h-14">
+				<div>
+					<div className="flex justify-between items-center flex-wrap py-2">
 						<h2 className="text-xl sm:text-2xl font-bold text-white">
 							#{tag?.name}
 						</h2>
+						<PostOrderFilter />
 					</div>
 					<PostGridSection>
 						<TaggedPostPagination slug={slug} />
